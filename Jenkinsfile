@@ -32,8 +32,19 @@ pipeline {
     }
     stage("Quality Gate") {
       steps {
-        timeout(time: 1, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
+        def tries = 0
+        sonarResultStatus = "PENDING"
+        while ((sonarResultStatus == "PENDING" || sonarResultStatus == "IN_PROGRESS") && tries++ < 5) {
+            try {
+                sonarResult = waitForQualityGate abortPipeline: true
+                sonarResultStatus = sonarResult.status
+            } catch(ex) {
+                echo "caught exception ${ex}"
+            }
+            echo "waitForQualityGate status is ${sonarResultStatus} (tries=${tries})"
+        }
+        if (sonarResultStatus != 'OK') {
+            error "Quality gate failure for SonarQube: ${sonarResultStatus}"
         }
       }
     }
