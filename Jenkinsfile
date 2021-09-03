@@ -17,7 +17,7 @@ pipeline {
       }
       steps {
         withSonarQuebeEnv('SONAR_LOCAL')
-        bat "${scannerHome}/bin/sonnar-scanner -e
+        bat "${scannerHome}/bin/sonnar-scanner -e \
               -Dsonar.projectKey=DeployBack \
               -Dsonar.host.url=http://sonar:9000 \
               -Dsonar.login=15544b409ba8e50f48677286cb229131ff1a505c \
