@@ -1,10 +1,5 @@
 pipeline {
   agent any
-
-  environment {
-      scannerHome = tool 'SONAR_SCANNER'
-  }
-
   stages {
     stage('Build Backend') {
       steps {
@@ -17,8 +12,11 @@ pipeline {
       }
     }
     stage('Sonar Analysis') {
+      environment {
+          scannerHome = tool 'SONAR_SCANNER'
+      }
       steps {
-        withSonarQuebeEnv('SONAR_LOCAL') {
+        withSonarQubeEnv('SONAR_LOCAL') {
           bat "${scannerHome}/bin/sonnar-scanner -e \
               -Dsonar.projectKey=DeployBack \
               -Dsonar.host.url=http://sonar:9000 \
