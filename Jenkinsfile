@@ -39,13 +39,15 @@ pipeline {
       }
     }
     stage('Deploy Backend') {
-      deploy adapters: [
-        tomcat8(credentialsId: 'TomcatLogin',
-        path: '',
-        url: 'http://tomcat:8080/')],
-        contextPath: 'tasks-backend',
-        onFailure: false,
-        war: '**/*.war'
+      steps {
+        deploy adapters: [
+          tomcat8(credentialsId: 'TomcatLogin',
+          path: '',
+          url: 'http://tomcat:8080/')],
+          contextPath: 'tasks-backend',
+          onFailure: false,
+          war: '**/*.war'
+      }
     }
   }
 }
