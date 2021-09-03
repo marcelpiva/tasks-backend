@@ -3,12 +3,12 @@ pipeline {
   stages {
     stage('Build Backend') {
       steps {
-        bat 'mvn clean package -DskipTests=true'
+        sh 'mvn clean package -DskipTests=true'
       }
     }
     stage('Unit Tests') {
       steps {
-        bat 'mvn test'
+        sh 'mvn test'
       }
     }
     stage('Sonar Analysis') {
@@ -17,7 +17,7 @@ pipeline {
       }
       steps {
         withSonarQubeEnv('SONAR_LOCAL') {
-          bat "${scannerHome}/bin/sonnar-scanner -e \
+          sh "${scannerHome}/bin/sonnar-scanner -e \
               -Dsonar.projectKey=DeployBack \
               -Dsonar.host.url=http://sonar:9000 \
               -Dsonar.login=15544b409ba8e50f48677286cb229131ff1a505c \
