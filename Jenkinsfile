@@ -21,7 +21,7 @@ pipeline {
       }
       steps {
         withSonarQubeEnv('SONAR_LOCAL') {
-          sh "${scannerHome}/bin/sonnar-scanner -e \
+          sh "${scannerHome}/bin/sonar-scanner -e \
               -Dsonar.projectKey=DeployBack \
               -Dsonar.host.url=http://sonar:9000 \
               -Dsonar.login=15544b409ba8e50f48677286cb229131ff1a505c \
